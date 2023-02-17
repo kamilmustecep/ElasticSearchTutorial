@@ -93,5 +93,22 @@ namespace ElasticSearchApi.Controllers
         }
 
 
+        [HttpGet]
+        [Route("api/deletespesific")]
+        public IActionResult DeleteSpesific(int id, string indexName,int pubid)
+        {
+
+            var response = _newsService.DeleteSpecific(indexName, id, pubid, "pkNewsId", "fkCategoryId");
+            if (response.Result == null)
+            {
+                return Content("Data yok");
+            }
+            else
+            {
+                return Content(response.Result.ToString());
+            }
+
+        }
+
     }
 }

@@ -100,6 +100,28 @@ namespace ElasticSearchApi.BLL.BaseService
             }
         }
 
+
+        public async Task<bool> DeleteSpecific(string indexName, int id,int pubid,string idFieldName,string pubIdFieldName)
+        {
+
+            //idFieldName alanı id'ye eşit ve küçük olup pubIdFieldName'si pubid olan tüm kayıtları silmek
+            var response = await _client.DeleteByQueryAsync<object>(d => d
+                                        .Index(indexName)
+                                        .Query(q => q
+                                            .Bool(b => b
+                                                .Must(
+                                                    m => m.Range(r => r.Field(idFieldName).LessThanOrEquals(id)),
+                                                    m => m.Match(ma => ma.Field(pubIdFieldName).Query(pubid.ToString()))
+                                                )
+                                            )
+                                        )
+                                    );
+
+
+            return true;
+            
+        }
+
         public async Task<bool> Insert(T Model, string indexName)
         {
             var result = await _client.IndexAsync(Model, t => t.Index(indexName));
@@ -151,5 +173,8 @@ namespace ElasticSearchApi.BLL.BaseService
             return response;
 
         }
+
+
+
     }
 }
