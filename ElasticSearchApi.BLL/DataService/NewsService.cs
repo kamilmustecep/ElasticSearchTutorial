@@ -6,7 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ElasticSearchApi.BLL.DataService
 {
@@ -35,6 +37,31 @@ namespace ElasticSearchApi.BLL.DataService
                          )
                     )
                 );
+
+             
+
+                //searchQuery = searchQuery
+                //    .Query(q => q
+                //        .Bool(b => b
+                //            .Should(sh => sh
+                //                .Wildcard(w => w
+                //                    .Field(f => f.FullNews)
+                //                    .Value(searchText)
+                //                ),
+                //                sh => sh
+                //                .Wildcard(w => w
+                //                    .Field(f => f.Spot)
+                //                    .Value(searchText)
+                //                ),
+                //                sh => sh
+                //                .Wildcard(w => w
+                //                    .Field(f => f.Title)
+                //                    .Value(searchText)
+                //                )
+                //            )
+                //        )
+                //    );
+
             }
             //İÇEREN (-)İÇERMEYEN
             else if (searchArray.Where(t => t.StartsWith("-")).ToList().Count > 0)
